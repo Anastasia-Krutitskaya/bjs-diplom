@@ -1,19 +1,24 @@
 'use strict'
-let userForm = new UserForm();
-userForm.loginFormCallback = function(data) {
-    const xhr = new XMLHttpRequest();
-    // xhr.onreadystatechange = processResponse;
-    // function processResponse(e) {   
-    //     if (xhr.readyState === 4) {
-    //         ApiConnector.login();   // ??? Передайте в запрос авторизации функцию, которая будет выполняться при попытке авторизации ???
-    //         console.log(xhr.responseText);
-    //     }
-    //  }
-    xhr.open('GET', 'db.json', true);
-    xhr.onload = function() {
-        console.log(xhr.response);
-    }
-    xhr.send();
+const userForm = new UserForm();
+userForm.loginFormCallback = data => {
+    ApiConnector.login(data, (response) => {
+        console.log(response)
+        if (response.success) {
+            location.reload();
+        } else {
+            console.log("Ошибка")
+        }   
+    });   
 }
-  
-    
+
+userForm.registerFormCallback = data => {
+    ApiConnector.register(data, (response) => {
+        console.log(response);
+        if (response.success) {
+            location.reload();
+        } else {
+            console.log("Ошибка")
+        }  
+    });    
+}  
+
