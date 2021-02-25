@@ -17,14 +17,16 @@ ApiConnector.current((response) => {
 })
 
 const ratesBoard = new RatesBoard();
-ApiConnector.getStocks((response) => {
-    if (response.success) {
-        ratesBoard.clearTable();
-        ratesBoard.fillTable(response.data);
-    }
-});
-//ApiConnector.getStocks();  // ? выдает ошибку
-setInterval(ApiConnector.getStocks, 60000);
+function getStocks() {
+    ApiConnector.getStocks((response) => {
+        if (response.success) {
+            ratesBoard.clearTable();
+            ratesBoard.fillTable(response.data);
+        }
+    })
+}
+getStocks();
+setInterval(getStocks, 60000);
 
 
 
